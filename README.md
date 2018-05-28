@@ -1,4 +1,6 @@
+![](https://raw.githubusercontent.com/Zorpos/Okabot/master/okabot.png)
 # Okabot
+
 A spelling correction bot for /r/SteinsGate
 <hr>
 
