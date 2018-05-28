@@ -17,5 +17,7 @@ Phrases corrected include:
 There maybe a easter-egg or two in the code.
 
 <hr>
-# License
+
+License
+======
 Okabot is licensed under GNU GPLv3
