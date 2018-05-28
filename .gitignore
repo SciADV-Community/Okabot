@@ -1,0 +1,8 @@
+# Build folders
+__pycache__
+db
+venv
+.idea
+
+# Ignore praw config
+praw.ini
