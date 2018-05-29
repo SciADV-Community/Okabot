@@ -15,3 +15,8 @@ Phrases corrected include:
 - Ruka and Rukako
 
 There maybe a easter-egg or two in the code.
+
+
+License
+======
+Okabot is licensed under GNU GPLv3
