@@ -1,9 +1,9 @@
-import praw
+from postDB import queryDB, appendDB
 import random
-import re
+
 
 footer = ("\n\n***\n\n"
-          "^[Why?](http://i.imgur.com/JmzUk.jpg) ^| [^More ^Info](http://steins-gate.wikia.com/wiki/Rintaro_Okabe) ^|"
+          "^[Why?](https://github.com/Zorpos/Okabot/blob/master/README.md) ^| [^More ^Info](https://github.com/Zorpos/Okabot) ^|"
           " ^[Creator](http://futuregadget-lab.us/) ^|"
           " ^[Contact](https://np.reddit.com/message/compose/?to=zaros104&subject=Okabot%20Feedback)"
 )
@@ -19,6 +19,7 @@ def congroo_reply(comment, correction, arg):
         elif response == 3:
             comment.reply("No! Not *Cong" + arg.group(1) + "*! *" + correction + "*!" + footer)
 
+        appendDB(comment.submission, comment.id)
         print("Replied to:" + comment.id + "\n")
 
 
@@ -34,7 +35,8 @@ def tutturu_reply(comment):
     elif response == 3:
         comment.reply("*Tutturu* to you too." + footer)
 
-        print("Replied to:" + comment.id + "\n")
+    appendDB(comment.submission, comment.id)
+    print("Replied to:" + comment.id + "\n")
 
 
 def luka_reply(comment):
@@ -52,7 +54,11 @@ def luka_reply(comment):
                                     "The essence of Japanese beauty.\n\n"
                                     "The chief priest's son.\n\n That's right, \"son\"." + footer)
 
+    appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
+
 
 def nullpo_reply(comment):
     comment.reply("[Gah!](https://i.imgur.com/3jJWARm.png)" + footer)
+    appendDB(comment.submission, comment.id)
+    print("Replied to:" + comment.id + "\n")
