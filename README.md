@@ -11,6 +11,7 @@ It posts a quick corrections in a typical humorous Okabe style.
 Phrases corrected include:
 
 - Congroo or other similar Cong**** mistakes
+- Hooin Kyouma, Houoin Kyouma, and similar mistypes
 - Tuturu, tootooru and other variations
 - Ruka and Rukako
 
