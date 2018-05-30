@@ -22,6 +22,21 @@ def congroo_reply(comment, correction, arg):
         appendDB(comment.submission, comment.id)
         print("Replied to:" + comment.id + "\n")
 
+def kyouma_reply(comment):
+    response = random.randint(1, 3)
+
+    if response == 1:
+        comment.reply("It's Hououin Kyouma.\n\n"
+                                    "'Houou' for 'phoenix', then 'in', and finally 'Kyouma' which means "
+                                    "a 'horrible truth' that must never be revealed.\n\n" 
+                                    "Explaining the 'in' part of 'Hououin' would take too long." + footer)
+    elif response == 2:
+        comment.reply("I am *HOUOUIN KYOUMA*! How many times do I have to tell you, Christina!?" + footer)
+    elif response == 3:
+        comment.reply("I am *Hououin Kyouma*. Always have been, always will be." + footer)
+
+    appendDB(comment.submission, comment.id)
+    print("Replied to:" + comment.id + "\n")
 
 def tutturu_reply(comment):
     response = random.randint(1, 3)
