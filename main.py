@@ -14,7 +14,7 @@ print(" _\ \/ __/ -_) / _ \(_-<_ / (_ / _ `/ __/ -_)")
 print("/___/\__/\__/_/_//_/___( )\___/\_,_/\__/\__/ ")
 print("                       |/                    ")
 print("---------------------------------------------")
-print("「Future Gadget 38, 4th Edition Ver. 1.61」  ")
+print("Future Gadget 38, 4th Edition Ver. 1.61  ")
 print()
 
 
