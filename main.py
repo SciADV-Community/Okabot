@@ -28,7 +28,7 @@ verifyDB()
 print("Post Database loaded")
 
 reddit = praw.Reddit("Okabot")
-subreddit = reddit.subreddit("anime+steinsgate")
+subreddit = reddit.subreddit("steinsgate")
 
 print("Connection established")
 print("Stream Connected")
@@ -69,7 +69,7 @@ while (True):
                             luka_reply(comment)
 
 
-                        if re.search("[o]{1,2}pa", comment.body, re.IGNORECASE):
+                        if re.search("\W[o]{1,2}pa\W", comment.body, re.IGNORECASE):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
 
                             upa_reply(comment)
