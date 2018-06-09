@@ -1,5 +1,5 @@
-from reply import congroo_reply, kyouma_reply, tutturu_reply, luka_reply, nullpo_reply
-from postDB import verifyDB, queryDB, appendDB
+from reply import response_load, congroo_reply, kyouma_reply, tutturu_reply, luka_reply, upa_reply, nullpo_reply
+from postDB import verifyDB, queryDB
 from datetime import datetime
 from time import sleep
 import praw,prawcore
@@ -14,21 +14,25 @@ print(" _\ \/ __/ -_) / _ \(_-<_ / (_ / _ `/ __/ -_)")
 print("/___/\__/\__/_/_//_/___( )\___/\_,_/\__/\__/ ")
 print("                       |/                    ")
 print("---------------------------------------------")
+print("「Future Gadget 38, 4th Edition Ver. 1.61」  ")
+print()
 
 
 logging.basicConfig(filename="okabot.log")
 print("Logging enabled")
 
+response_load()
+print("Responses loaded")
+
 verifyDB()
 print("Post Database loaded")
 
 reddit = praw.Reddit("Okabot")
-subreddit = reddit.subreddit("steinsgate")
+subreddit = reddit.subreddit("anime+steinsgate")
 
 print("Connection established")
-
 print("Stream search activated")
-print("---------------------------------\n")
+print("---------------------------------------------")
 
 while (True):
     try:
@@ -43,6 +47,7 @@ while (True):
 
                             congroo_reply(comment, correction, arg)
 
+
                         if (re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
                             (re.search("Ho(u)?oin Kyouma", comment.body, re.IGNORECASE)) or
                             (re.search("Hououin Kyoma", comment.body, re.IGNORECASE))):
@@ -50,16 +55,25 @@ while (True):
 
                             kyouma_reply(comment)
 
+
                         if (re.search("T[u,o]{2}[\s,-]?T[u,o]{2}[\s,-]?r[u,o]?[u,o]?", comment.body, re.IGNORECASE) or
                             (re.search("Tuturu", comment.body, re.IGNORECASE))):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- TTR")
 
                             tutturu_reply(comment)
 
+
                         if re.search("ruka[k]?[o]?", comment.body, re.IGNORECASE):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
 
                             luka_reply(comment)
+
+
+                        if re.search("[o]{1,2}pa", comment.body, re.IGNORECASE):
+                            print("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
+
+                            upa_reply(comment)
+
 
                         if re.search("nullpo", comment.body, re.IGNORECASE):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- NULL")
@@ -92,7 +106,14 @@ while (True):
 
     except prawcore.exceptions.RequestException as e:
         print(str(e))
-        print("You guys are hopeless. Better do something quick. (Connection failed)")
+        print("You guys are hopeless. Better do something quick. (Connection failed)\n")
+        logging.warning(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+        sleep(300)
+        pass
+
+    except prawcore.exceptions.ResponseException as e:
+        print(str(e))
+        # Need a meme here
         logging.warning(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
         sleep(300)
         pass
