@@ -8,7 +8,7 @@ import os
 path = "./db/"
 respfile = ["EPK.txt", "KYO.txt", "TTR.txt", "LKO.txt", "UPA.txt"]
 respdata = []
-baseurl = "https://github.com/Zorpos/Okabot/blob/master/db/"
+baseurl = "https://raw.githubusercontent.com/Zorpos/Okabot/master/db/"
 
 footer = ("\n\n***\n\n"
           "^[Why?](https://github.com/Zorpos/Okabot/blob/master/README.md) ^| [^More ^Info](https://github.com/Zorpos/Okabot) ^|"
