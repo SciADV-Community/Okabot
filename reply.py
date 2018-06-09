@@ -1,6 +1,14 @@
 from postDB import queryDB, appendDB
+import urllib.request, urllib.error
 import random
+import os
 
+
+# El Psy Kongroo, Hououin Kyouma, Tutturu, Luka
+path = "./db/"
+respfile = ["EPK.txt", "KYO.txt", "TTR.txt", "LKO.txt", "UPA.txt"]
+respdata = []
+baseurl = "https://github.com/Zorpos/Okabot/blob/master/db/"
 
 footer = ("\n\n***\n\n"
           "^[Why?](https://github.com/Zorpos/Okabot/blob/master/README.md) ^| [^More ^Info](https://github.com/Zorpos/Okabot) ^|"
@@ -8,67 +16,82 @@ footer = ("\n\n***\n\n"
           " ^[Contact](https://np.reddit.com/message/compose/?to=zaros104&subject=Okabot%20Feedback)"
 )
 
+def response_load():
+    # Verify files exist
+    for i in respfile:
+        if not (os.path.isfile(path + i)):
+            try:
+                print("Missing file " + i + " , Downloading from repo.")
+                urllib.request.urlretrieve(baseurl + i, i)
+            except urllib.error.HTTPError as e:
+                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print(e)
+                print(baseurl + i)
+                print("Resolving networking or create file. ")
+                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                quit(1)
+
+    # Load files to memory
+    index = 0
+    for i in respfile:
+        respdata.append([line.rstrip('\n') for line in open(path + respfile[index])])
+        index += 1
+
+
 def congroo_reply(comment, correction, arg):
     if not (("cong" in str(comment).lower()) and("kong" in str(comment).lower())):
-        response = random.randint(1, 3)
+        # 0 & -1 because Python can't can't index
+        respnum = random.randint(0, len(respdata[0]) - 1)
 
-        if (arg.group(1) == 'roo' or response == 1):
-            comment.reply("*It's " + correction + "*." + footer)
-        elif response == 2:
-            comment.reply("It's *" + correction + "*! Don't forget it." + footer)
-        elif response == 3:
-            comment.reply("No! Not *Cong" + arg.group(1) + "*! *" + correction + "*!" + footer)
+        response = respdata[0][respnum]
 
+        if "%correction%" in response:
+            response = response.replace("%correction%", correction)
+        if "%arg1%" in response:
+            response = response.replace("%arg1%", arg)
+
+        print(response + footer)
+        comment.reply(response + footer)
         appendDB(comment.submission, comment.id)
         print("Replied to:" + comment.id + "\n")
 
+
 def kyouma_reply(comment):
-    response = random.randint(1, 3)
+    respnum = random.randint(0, len(respdata[1]) - 1)
+    response = respdata[1][respnum]
 
-    if response == 1:
-        comment.reply("It's Hououin Kyouma.\n\n"
-                                    "'Houou' for 'phoenix', then 'in', and finally 'Kyouma' which means "
-                                    "a 'horrible truth' that must never be revealed.\n\n" 
-                                    "Explaining the 'in' part of 'Hououin' would take too long." + footer)
-    elif response == 2:
-        comment.reply("I am *HOUOUIN KYOUMA*! How many times do I have to tell you, Christina!?" + footer)
-    elif response == 3:
-        comment.reply("I am *Hououin Kyouma*. Always have been, always will be." + footer)
-
+    print(response + footer)
+    comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
 
+
 def tutturu_reply(comment):
-    response = random.randint(1, 3)
+    respnum = random.randint(0, len(respdata[2]) - 1)
+    response = respdata[2][respnum]
 
-    if response == 1:
-        comment.reply("It maybe this worldline, but that doesn't sound totally right... \n\n"
-                                    "I believe the utterance is *\"Tutturu\"*, is it not?" + footer)
-    elif response == 2:
-        comment.reply("While I'm not sure where it came from or what it means, *\"tutturu\"* "
-                                    "is definitely her catchphrase." + footer)
-    elif response == 3:
-        comment.reply("*Tutturu* to you too." + footer)
-
+    print(response + footer)
+    comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
 
 
 def luka_reply(comment):
-    response = random.randint(1, 3)
+    respnum = random.randint(0, len(respdata[3]) - 1)
+    response = respdata[3][respnum]
 
-    if response == 1:
-        comment.reply("I do believe you're referring to lab mem 006, Urushibara Luka.\n\n"
-                                    "Still a dude... I think." + footer)
-    elif response == 2:
-        comment.reply("*Luka* is the epitome of 'Someone this cute can't be a girl'." + footer)
-    elif response == 3:
-        comment.reply("*Urushibara Luka.* \n\n "
-                                    "A stunning example of feminine charm and grace. \n\n"
-                                    "Lips delicate like cherry blossoms in bloom.\n\n"
-                                    "The essence of Japanese beauty.\n\n"
-                                    "The chief priest's son.\n\n That's right, \"son\"." + footer)
+    print(response + footer)
+    comment.reply(response + footer)
+    appendDB(comment.submission, comment.id)
+    print("Replied to:" + comment.id + "\n")
 
+
+def upa_reply(comment):
+    respnum = random.randint(0, len(respdata[4]) - 1)
+    response = respdata[4][respnum]
+
+    print(response + footer)
+    comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
 
@@ -77,3 +100,4 @@ def nullpo_reply(comment):
     comment.reply("[Gah!](https://i.imgur.com/3jJWARm.png)" + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
+
