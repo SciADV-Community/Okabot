@@ -14,7 +14,7 @@ print(" _\ \/ __/ -_) / _ \(_-<_ / (_ / _ `/ __/ -_)")
 print("/___/\__/\__/_/_//_/___( )\___/\_,_/\__/\__/ ")
 print("                       |/                    ")
 print("---------------------------------------------")
-print("「 Future Gadget 38, 4th Edition Ver. 1.61 」 ")
+print("「 Future Gadget 38, 4th Edition Ver. 1.62 」 ")
 print()
 
 
@@ -102,11 +102,10 @@ while (True):
                         pass
                 else:
                     print("That's why we love you! That's why we admire you! (Response Exists: " +
-                         str(comment.submission) + " " + comment.id + ")")
+                         str(comment.submission) + " " + comment.id + ")\n")
 
     except prawcore.exceptions.RequestException as e:
-        print(str(e))
-        print("You guys are hopeless. Better do something quick. (Connection failed)\n")
+        print("You guys are hopeless. Better do something quick. (Connection failure)\n")
         logging.warning(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
         sleep(300)
         pass
