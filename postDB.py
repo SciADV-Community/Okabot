@@ -54,9 +54,3 @@ def connectDB():
     c.execute("CREATE TABLE IF NOT EXISTS '{tn}' ({p1} {c2Type}, {c2} {c2Type})".
               format(tn=tableName, p1=p1, p1Type=p1Type, c2=c2, c2Type=c2Type))
     return conn, c
-
-
-
-#verifyDB()
-#for x in range(1,100):
-#    appendDB(x)
