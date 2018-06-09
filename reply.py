@@ -22,7 +22,7 @@ def response_load():
         if not (os.path.isfile(path + i)):
             try:
                 print("Missing file " + i + " , Downloading from repo.")
-                urllib.request.urlretrieve(baseurl + i, i)
+                urllib.request.urlretrieve(baseurl + i, path + i)
             except urllib.error.HTTPError as e:
                 print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 print(e)
