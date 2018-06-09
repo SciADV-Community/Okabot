@@ -1,7 +1,7 @@
 # Okabot
 ![](https://raw.githubusercontent.com/Zorpos/Okabot/master/okabot.png)
 
-A spelling correction bot for /r/SteinsGate
+A spelling correction bot for Reddit
 <hr>
 
 This bot was inspired by several incorrect spellings popularized by groups like CrunchyRoll and HorribleSubs. 
@@ -14,6 +14,7 @@ Phrases corrected include:
 - Hooin Kyouma, Houoin Kyouma, and similar mistypes
 - Tuturu, tootooru and other variations
 - Ruka and Rukako
+- Oopa and variants
 
 There maybe a easter-egg or two in the code.
 
