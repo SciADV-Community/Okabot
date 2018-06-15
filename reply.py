@@ -34,7 +34,15 @@ def response_load():
     # Load files to memory
     index = 0
     for i in respfile:
-        respdata.append([line.rstrip('\n') for line in open(path + respfile[index])])
+
+        resparray = []
+        for line in open(path + respfile[index]):
+            # Quick and dirty fix for having newlines in quote files
+            line = line.strip('\n')
+            line = line.replace('\\n','\n')
+            resparray.append(line)
+
+        respdata.append(resparray)
         index += 1
 
 
@@ -50,7 +58,7 @@ def congroo_reply(comment, correction, arg):
         if "%arg1%" in response:
             response = response.replace("%arg1%", arg)
 
-        print(response + footer)
+        #print(response + footer)
         comment.reply(response + footer)
         appendDB(comment.submission, comment.id)
         print("Replied to:" + comment.id + "\n")
@@ -60,7 +68,7 @@ def kyouma_reply(comment):
     respnum = random.randint(0, len(respdata[1]) - 1)
     response = respdata[1][respnum]
 
-    print(response + footer)
+    #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
@@ -70,7 +78,7 @@ def tutturu_reply(comment):
     respnum = random.randint(0, len(respdata[2]) - 1)
     response = respdata[2][respnum]
 
-    print(response + footer)
+    #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
@@ -80,8 +88,8 @@ def luka_reply(comment):
     respnum = random.randint(0, len(respdata[3]) - 1)
     response = respdata[3][respnum]
 
-    print(response + footer)
-    comment.reply(response + footer)
+    #print(response + footer)
+    comment.reply(str(response) + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
 
@@ -90,7 +98,7 @@ def upa_reply(comment):
     respnum = random.randint(0, len(respdata[4]) - 1)
     response = respdata[4][respnum]
 
-    print(response + footer)
+    #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
@@ -100,4 +108,3 @@ def nullpo_reply(comment):
     comment.reply("[Gah!](https://i.imgur.com/3jJWARm.png)" + footer)
     appendDB(comment.submission, comment.id)
     print("Replied to:" + comment.id + "\n")
-
