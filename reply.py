@@ -48,15 +48,23 @@ def response_load():
 
 def congroo_reply(comment, correction, arg):
     if not (("cong" in str(comment).lower()) and("kong" in str(comment).lower())):
-        # 0 & -1 because Python can't can't index
+        # 0 & -1 because Python can't index
         respnum = random.randint(0, len(respdata[0]) - 1)
 
         response = respdata[0][respnum]
 
-        if "%correction%" in response:
-            response = response.replace("%correction%", correction)
-        if "%arg1%" in response:
-            response = response.replace("%arg1%", arg)
+        try:
+            if "%correction%" in response:
+                response = response.replace("%correction%", correction)
+            if "%arg1%" in response:
+                response = response.replace("%arg1%", arg)
+        except TypeError as e:
+            print(response)
+            print("Correction: " + correction + " | " + "Arg: " + arg)
+            print("---------------------------------------------")
+            print(str(e))
+            print("---------------------------------------------")
+
 
         #print(response + footer)
         comment.reply(response + footer)
