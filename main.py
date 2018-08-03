@@ -1,4 +1,4 @@
-from reply import response_load, congroo_reply, kyouma_reply, tutturu_reply, luka_reply, upa_reply, nullpo_reply
+from reply import response_load, congroo_reply, kyouma_reply, tutturu_reply, luka_reply, upa_reply, stein_reply, nullpo_reply
 from postDB import verifyDB, queryDB
 from datetime import datetime
 from time import sleep
@@ -45,7 +45,7 @@ while (True):
                             arg = re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", str(comment.body), re.IGNORECASE)
                             correction = "Kong" + arg.group(1)
 
-                            congroo_reply(comment, correction, arg)
+                            congroo_reply(comment, correction, arg.group(1))
 
 
                         if (re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
@@ -74,6 +74,10 @@ while (True):
 
                             upa_reply(comment)
 
+                        if re.search("stein\'s gate", comment.body, re.IGNORECASE):
+                            print("Found: " + str(comment.submission) + " " + comment.id + "- SG")
+
+                            stein_reply(comment)
 
                         if re.search("nullpo", comment.body, re.IGNORECASE):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- NULL")
