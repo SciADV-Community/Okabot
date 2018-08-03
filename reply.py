@@ -6,7 +6,7 @@ import os
 
 # El Psy Kongroo, Hououin Kyouma, Tutturu, Luka
 path = "./db/"
-respfile = ["EPK.txt", "KYO.txt", "TTR.txt", "LKO.txt", "UPA.txt"]
+respfile = ["EPK.txt", "KYO.txt", "TTR.txt", "LKO.txt", "UPA.txt", "SG.txt"]
 respdata = []
 baseurl = "https://raw.githubusercontent.com/Zorpos/Okabot/master/db/"
 
@@ -105,6 +105,16 @@ def luka_reply(comment):
 def upa_reply(comment):
     respnum = random.randint(0, len(respdata[4]) - 1)
     response = respdata[4][respnum]
+
+    #print(response + footer)
+    comment.reply(response + footer)
+    appendDB(comment.submission, comment.id)
+    print("Replied to:" + comment.id + "\n")
+
+
+def stein_reply(comment):
+    respnum = random.randint(0, len(respdata[4]) - 1)
+    response = respdata[5][respnum]
 
     #print(response + footer)
     comment.reply(response + footer)
