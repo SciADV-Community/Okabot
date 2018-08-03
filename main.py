@@ -45,7 +45,7 @@ while (True):
                             arg = re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", str(comment.body), re.IGNORECASE)
                             correction = "Kong" + arg.group(1)
 
-                            congroo_reply(comment, correction, arg.group(1))
+                            congroo_reply(comment, correction)
 
 
                         if (re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
