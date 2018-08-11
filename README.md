@@ -6,7 +6,7 @@ A spelling correction bot for Reddit
 
 This bot was inspired by several incorrect spellings popularized by groups like CrunchyRoll and HorribleSubs. 
 
-It posts a quick corrections in a typical humorous Okabe style.
+It posts a quick corrections with typical humorous Okabe style.
 
 Phrases corrected include:
 
@@ -14,11 +14,13 @@ Phrases corrected include:
 - Hooin Kyouma, Houoin Kyouma, and similar mistypes
 - Tuturu, tootooru and other variations
 - Ruka and Rukako
+- Stein's Gate
 - Oopa and variants
 
 There maybe a easter-egg or two in the code.
 
-This bot is for Python3. 
+This bot is for Python3.
+Logging utilizes systemd, so logging will fail on any non-Linux setup without modification.
 
 License
 ======
