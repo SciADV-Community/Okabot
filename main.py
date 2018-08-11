@@ -40,7 +40,8 @@ while (True):
             if comment.author != "Okabot":
                 if queryDB(comment.submission, comment.id) == False:
                     try:
-                        if re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", comment.body, re.IGNORECASE):
+                        if (re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", comment.body, re.IGNORECASE) and \
+                            not re.search("El Psy Kongroo", comment.body, re.IGNORECASE)):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- ESK")
                             arg = re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", str(comment.body), re.IGNORECASE)
                             correction = "Kong" + arg.group(1)
@@ -48,33 +49,38 @@ while (True):
                             congroo_reply(comment, correction)
 
 
-                        if (re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
+                        if ((re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
                             (re.search("Ho(u)?oin Kyouma", comment.body, re.IGNORECASE)) or
-                            (re.search("Hououin Kyoma", comment.body, re.IGNORECASE))):
+                            (re.search("Hououin Kyoma", comment.body, re.IGNORECASE))) and
+                            not re.search("Hououin Kyouma", comment.body, re.IGNORECASE)):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- KYOUMA")
 
                             kyouma_reply(comment)
 
 
-                        if (re.search("T[u,o]{2}[\s,-]?T[u,o]{2}[\s,-]?r[u,o]?[u,o]?", comment.body, re.IGNORECASE) or
-                            (re.search("Tuturu", comment.body, re.IGNORECASE))):
+                        if ((re.search("T[u,o]{2}[\s,-]?T[u,o]{2}[\s,-]?r[u,o]?[u,o]?", comment.body, re.IGNORECASE) or
+                            (re.search("Tuturu", comment.body, re.IGNORECASE))) and
+                            not re.search("Tutturu", comment.body, re.IGNORECASE)):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- TTR")
 
                             tutturu_reply(comment)
 
 
-                        if re.search("ruka[k]?[o]?", comment.body, re.IGNORECASE):
+                        if (re.search("(\A|\W)ruka[k]?[o]?", comment.body, re.IGNORECASE) and
+                            not re.search("(\A|\W)luka", comment.body, re.IGNORECASE)):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
 
                             luka_reply(comment)
 
 
-                        if re.search("\W[o]{1,2}pa\W", comment.body, re.IGNORECASE):
-                            print("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
+                        if (re.search("\W[o]{1,2}pa\W", comment.body, re.IGNORECASE) and
+                            not re.search("(\A|\W)luka", comment.body, re.IGNORECASE)):
+                            print("Found: " + str(comment.submission) + " " + comment.id + "- OPA")
 
                             upa_reply(comment)
 
-                        if re.search("stein\'s gate", comment.body, re.IGNORECASE):
+                        if (re.search("stein\'s gate", comment.body, re.IGNORECASE) and
+                            not re.search("steins(\;|\s)gate", comment.body, re.IGNORECASE)):
                             print("Found: " + str(comment.submission) + " " + comment.id + "- SG")
 
                             stein_reply(comment)
