@@ -1,3 +1,4 @@
+from logger import logger
 import sqlite3, os
 
 dbPath = "./db/"
@@ -14,7 +15,7 @@ c2Type = 'text'
 # For checking on startup
 def verifyDB():
     if not os.path.exists(dbPath):
-        print("Folder does not exist")
+        logger.info("Folder does not exist")
         os.mkdir(dbPath)
 
     if len(os.listdir(dbPath)) != 0:
