@@ -20,7 +20,6 @@ Phrases corrected include:
 There maybe a easter-egg or two in the code.
 
 This bot is for Python3.
-Logging utilizes systemd, so logging will fail on any non-Linux setup without modification.
 
 License
 ======
