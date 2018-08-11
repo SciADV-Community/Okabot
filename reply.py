@@ -1,4 +1,5 @@
 from postDB import queryDB, appendDB
+from logger import logger
 import urllib.request, urllib.error
 import random
 import os
@@ -21,14 +22,14 @@ def response_load():
     for i in respfile:
         if not (os.path.isfile(path + i)):
             try:
-                print("Missing file " + i + " , Downloading from repo.")
+                logger.warning("Missing file " + i + " , Downloading from repo.")
                 urllib.request.urlretrieve(baseurl + i, path + i)
             except urllib.error.HTTPError as e:
-                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                print(e)
-                print(baseurl + i)
-                print("Resolving networking or create file. ")
-                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                logger.critical("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                logger.critical(e)
+                logger.critical(baseurl + i)
+                logger.critical("Resolve networking or create file. ")
+                logger.critical("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 quit(1)
 
     # Load files to memory
@@ -59,17 +60,17 @@ def congroo_reply(comment, correction, arg):
             if "%arg1%" in response:
                 response = response.replace("%arg1%", arg)
         except TypeError as e:
-            print(response)
-            print("Correction: " + correction + " | " + "Arg: " + arg)
-            print("---------------------------------------------")
-            print(str(e))
-            print("---------------------------------------------")
+            logger.error(response)
+            logger.error("Correction: " + correction + " | " + "Arg: " + arg)
+            logger.error("---------------------------------------------")
+            logger.error(str(e))
+            logger.error("---------------------------------------------")
 
 
         #print(response + footer)
         comment.reply(response + footer)
         appendDB(comment.submission, comment.id)
-        print("Replied to:" + comment.id + "\n")
+        logger.info("Replied to:" + comment.id + "\n")
 
 
 def kyouma_reply(comment):
@@ -79,7 +80,7 @@ def kyouma_reply(comment):
     #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
 
 
 def tutturu_reply(comment):
@@ -89,7 +90,7 @@ def tutturu_reply(comment):
     #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
 
 
 def luka_reply(comment):
@@ -99,7 +100,7 @@ def luka_reply(comment):
     #print(response + footer)
     comment.reply(str(response) + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
 
 
 def upa_reply(comment):
@@ -109,7 +110,7 @@ def upa_reply(comment):
     #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
 
 
 def stein_reply(comment):
@@ -119,10 +120,10 @@ def stein_reply(comment):
     #print(response + footer)
     comment.reply(response + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
 
 
 def nullpo_reply(comment):
     comment.reply("[Gah!](https://i.imgur.com/3jJWARm.png)" + footer)
     appendDB(comment.submission, comment.id)
-    print("Replied to:" + comment.id + "\n")
+    logger.info("Replied to:" + comment.id + "\n")
