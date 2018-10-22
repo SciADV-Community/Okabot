@@ -71,7 +71,7 @@ while (True):
 
 
                         if (re.search("\W[o]{1,2}pa\W", comment.body, re.IGNORECASE) and
-                            not re.search("(\A|\W)luka", comment.body, re.IGNORECASE)):
+                            not re.search("(\A|\W)upa", comment.body, re.IGNORECASE)):
                             logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- OPA")
 
                             upa_reply(comment)
