@@ -46,9 +46,7 @@ while (True):
                             congroo_reply(comment, correction, arg.group(1))
 
 
-                        if ((re.search("Ho(u)?oin Kyo(u)?ma", comment.body, re.IGNORECASE) or
-                            (re.search("Ho(u)?oin Kyouma", comment.body, re.IGNORECASE)) or
-                            (re.search("Hououin Kyoma", comment.body, re.IGNORECASE))) and
+                        if (re.search("Ho(uo|o)n?in Ky(o|oo|ou)ma", comment.body, re.IGNORECASE) and
                             not re.search("Hououin Kyouma", comment.body, re.IGNORECASE)):
                             logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- KYOUMA")
 
