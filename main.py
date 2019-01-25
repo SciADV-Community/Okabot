@@ -25,7 +25,7 @@ verifyDB()
 logger.debug("Post Database loaded")
 
 reddit = praw.Reddit("Okabot")
-subreddit = reddit.subreddit("okabotplayground")
+subreddit = reddit.subreddit("steinsgate")
 
 logger.debug("Connection established")
 logger.info("Stream Connected")
@@ -62,14 +62,14 @@ while (True):
 
 
                         if (re.search("(\A|\W)ruka[k]?[o]?", comment.body, re.IGNORECASE) and
-                            not re.search("(\A|\W)luka", comment.body, re.IGNORECASE)):
+                            not re.search("luka", comment.body, re.IGNORECASE)):
                             logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
 
                             luka_reply(comment)
 
 
-                        if (re.search("\W[o]{1,2}pa\W", comment.body, re.IGNORECASE) and
-                            not re.search("(\A|\W)luka", comment.body, re.IGNORECASE)):
+                        if (re.search("\W[ou]{1,2}[p]{1,2}a\W", comment.body, re.IGNORECASE) and
+                            not re.search("upa", comment.body, re.IGNORECASE)):
                             logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- OPA")
 
                             upa_reply(comment)
