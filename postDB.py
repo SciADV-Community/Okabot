@@ -21,10 +21,8 @@ def verifyDB():
     if len(os.listdir(dbPath)) != 0:
         if not (os.path.isfile(dbPath + dbFile)):
             connectDB()
-
     else:
         connectDB()
-
 
 # Check if post has been checked
 def queryDB(postID, commentID):
