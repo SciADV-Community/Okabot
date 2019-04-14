@@ -20,6 +20,7 @@ Phrases corrected include:
 There maybe a easter-egg or two in the code.
 
 This bot is for Python3.
+Credit goes to Miyata (Lhr) for the icon.
 
 License
 ======
