@@ -1,12 +1,9 @@
 from logger import logger
-from reply import response_load, congroo_reply, kyouma_reply, tutturu_reply, luka_reply, upa_reply, stein_reply, nullpo_reply
-from postDB import verifyDB, queryDB
 from datetime import datetime
-from time import sleep
+from reply import response_load, comment_reply
 import praw,prawcore
-import re
-
-
+import postDB, fixDB
+import time
 
 logger.info("Initializing Okabot")
 
@@ -21,89 +18,56 @@ logger.debug("---------------------------------------------")
 response_load()
 logger.debug("Responses loaded")
 
-verifyDB()
+fixDB.verifyDB()
+logger.debug("Fix Database loaded")
+postDB.verifyDB()
 logger.debug("Post Database loaded")
 
 reddit = praw.Reddit("Okabot")
-subreddit = reddit.subreddit("steinsgate")
+subreddit = reddit.subreddit("okabotplayground")
 
 logger.debug("Connection established")
 logger.info("Stream Connected")
 logger.info("---------------------------------------------")
 
+cacheTime = 0
+
 while (True):
     try:
         for comment in subreddit.stream.comments():
             if comment.author != "Okabot":
-                if queryDB(comment.submission, comment.id) == False:
+                if postDB.queryDB(comment.submission, comment.id) == False:
                     try:
-                        if (re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", comment.body, re.IGNORECASE) and \
-                            not re.search("El Psy Kongroo", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- ESK")
-                            arg = re.search("El[\s\W]+Psy[\s\W]+Cong([a-z]*)", str(comment.body), re.IGNORECASE)
-                            correction = "Kong" + arg.group(1)
+                        ## Caching to decrease reads on the sqlite database
+                        ## Fix database will never be writelocked, so feel free to update while running
+                        if time.time() - cacheTime > 3600:
+                            fixDict = fixDB.loadCache()
 
-                            congroo_reply(comment, correction, arg.group(1))
-
-
-                        if (re.search("Ho(uo|o)n?in Ky(o|oo|ou)ma", comment.body, re.IGNORECASE) and
-                            not re.search("Hououin Kyouma", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- KYOUMA")
-
-                            kyouma_reply(comment)
-
-
-                        if ((re.search("T[u,o]{2}[\s,-]?T[u,o]{2}[\s,-]?r[u,o]?[u,o]?", comment.body, re.IGNORECASE) or
-                            (re.search("Tuturu", comment.body, re.IGNORECASE))) and
-                            not re.search("Tutturu", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- TTR")
-
-                            tutturu_reply(comment)
-
-
-                        if (re.search("(\A|\W)ruka[k]?[o]?", comment.body, re.IGNORECASE) and
-                            not re.search("luka", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- RUKA")
-
-                            luka_reply(comment)
-
-
-                        if (re.search("\W[ou]{1,2}[p]{1,2}a\W", comment.body, re.IGNORECASE) and
-                            not re.search("upa", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- OPA")
-
-                            upa_reply(comment)
-
-                        if (re.search("stein\'s gate", comment.body, re.IGNORECASE) and
-                            not re.search("steins(\;|\s)gate", comment.body, re.IGNORECASE)):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- SG")
-
-                            stein_reply(comment)
-
-                        if re.search("nullpo", comment.body, re.IGNORECASE):
-                            logger.debug("Found: " + str(comment.submission) + " " + comment.id + "- NULL")
-                            nullpo_reply(comment)
-
+                        # See if the terms in the dict are contained within the message
+                        for term in fixDict:
+                            if term in comment.body:
+                                fixID = fixDict[term]
+                                comment_reply(fixID, comment)
 
                     except praw.exceptions.APIException as e:
                         if "THREAD_LOCKED" in (str(e)):
-                            logging.warning("Gah! (Thread Locked)\n")
+                            logger.warning("Gah! (Thread Locked)\n")
                         elif "RATELIMIT" in (str(e)):
                             print("But I refuse. (RATELIMIT)\n")
-                            logging.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+                            logger.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
                             pass
-                        else: logging.critical(str(e))
+                        else: logger.critical(str(e))
 
                     except praw.exceptions.ClientException as e:
                         print(str(e))
                         print("Woah, I shouldn't waste all day on Reddit. (ClientException)\n")
-                        logging.critical(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+                        logger.critical(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
                         pass
 
                     except prawcore.exceptions.Forbidden as e:
                         print(str(e))
                         print("Very well. Time Leap Machine it is. (Forbidden)\n")
-                        logging.critical(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+                        logger.critical(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
                         pass
                 else:
                     logger.debug("That's why we love you! That's why we admire you! (Response Exists: " +
@@ -111,13 +75,13 @@ while (True):
 
     except prawcore.exceptions.RequestException as e:
         print("You guys are hopeless. Better do something quick. (Connection failure)\n")
-        logging.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
-        sleep(300)
+        logger.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+        time.sleep(300)
         pass
 
     except prawcore.exceptions.ResponseException as e:
         print(str(e))
         # Need a meme here
-        logging.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
-        sleep(300)
+        logger.error(datetime.now().strftime("%Y-%m-%d %H:%M") + " - " + str(e))
+        time.sleep(300)
         pass
