@@ -47,83 +47,28 @@ def response_load():
         index += 1
 
 
-def congroo_reply(comment, correction, arg):
-    if not (("cong" in str(comment).lower()) and("kong" in str(comment).lower())):
-        # 0 & -1 because Python can't index
+def comment_reply(fixID, comment):
+    if fixID == "EPK":
         respnum = random.randint(0, len(respdata[0]) - 1)
-
         response = respdata[0][respnum]
+    elif fixID == "KYO":
+        respnum = random.randint(0, len(respdata[1]) - 1)
+        response = respdata[1][respnum]
+    elif fixID == "TTR":
+        respnum = random.randint(0, len(respdata[2]) - 1)
+        response = respdata[2][respnum]
+    elif fixID == "LKO":
+        respnum = random.randint(0, len(respdata[3]) - 1)
+        response = respdata[3][respnum]
+    elif fixID == "UPA":
+        respnum = random.randint(0, len(respdata[4]) - 1)
+        response = respdata[4][respnum]
+    elif fixID == "SG":
+        respnum = random.randint(0, len(respdata[5]) - 1)
+        response = respdata[5][respnum]
+    else:
+        response = "[Gah!](https://i.imgur.com/3jJWARm.png)"
 
-        try:
-            if "%correction%" in response:
-                response = response.replace("%correction%", correction)
-            if "%arg1%" in response:
-                response = response.replace("%arg1%", arg)
-        except TypeError as e:
-            logger.error(response)
-            logger.error("Correction: " + correction + " | " + "Arg: " + arg)
-            logger.error("---------------------------------------------")
-            logger.error(str(e))
-            logger.error("---------------------------------------------")
-
-
-        #print(response + footer)
-        comment.reply(response + footer)
-        appendDB(comment.submission, comment.id)
-        logger.info("Replied to:" + comment.id + "\n")
-
-
-def kyouma_reply(comment):
-    respnum = random.randint(0, len(respdata[1]) - 1)
-    response = respdata[1][respnum]
-
-    #print(response + footer)
     comment.reply(response + footer)
-    appendDB(comment.submission, comment.id)
-    logger.info("Replied to:" + comment.id + "\n")
-
-
-def tutturu_reply(comment):
-    respnum = random.randint(0, len(respdata[2]) - 1)
-    response = respdata[2][respnum]
-
-    #print(response + footer)
-    comment.reply(response + footer)
-    appendDB(comment.submission, comment.id)
-    logger.info("Replied to:" + comment.id + "\n")
-
-
-def luka_reply(comment):
-    respnum = random.randint(0, len(respdata[3]) - 1)
-    response = respdata[3][respnum]
-
-    #print(response + footer)
-    comment.reply(str(response) + footer)
-    appendDB(comment.submission, comment.id)
-    logger.info("Replied to:" + comment.id + "\n")
-
-
-def upa_reply(comment):
-    respnum = random.randint(0, len(respdata[4]) - 1)
-    response = respdata[4][respnum]
-
-    #print(response + footer)
-    comment.reply(response + footer)
-    appendDB(comment.submission, comment.id)
-    logger.info("Replied to:" + comment.id + "\n")
-
-
-def stein_reply(comment):
-    respnum = random.randint(0, len(respdata[4]) - 1)
-    response = respdata[5][respnum]
-
-    #print(response + footer)
-    comment.reply(response + footer)
-    appendDB(comment.submission, comment.id)
-    logger.info("Replied to:" + comment.id + "\n")
-
-
-def nullpo_reply(comment):
-    comment.reply("[Gah!](https://i.imgur.com/3jJWARm.png)" + footer)
     appendDB(comment.submission, comment.id)
     logger.info("Replied to:" + comment.id + "\n")
