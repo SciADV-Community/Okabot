@@ -24,7 +24,7 @@ postDB.verifyDB()
 logger.debug("Post Database loaded")
 
 reddit = praw.Reddit("Okabot")
-subreddit = reddit.subreddit("okabotplayground")
+subreddit = reddit.subreddit("steinsgate")
 
 logger.debug("Connection established")
 logger.info("Stream Connected")
